@@ -1,5 +1,6 @@
 # gif_pygame
 [PyPI Link](https://pypi.org/project/gif-pygame/0.0.1/)
+
 A pygame addon that allows you to load, animate, and render animated image files like .gif and .apng
 
 ## How to use
