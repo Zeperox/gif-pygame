@@ -1,0 +1,1 @@
+from gif_pygame._pygame_gif import load, PygameGIF
