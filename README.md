@@ -7,12 +7,12 @@ A pygame addon that allows you to load, animate, and render animated image files
 ```py
 # example code
 
-import pygame, pygame_gif, sys
+import pygame, gif_pygame, sys
 
 win = pygame.display.set_mode((512, 512))
-example_gif = pygame_gif.load("example.gif") # Loads a .gif file
-example_png = pygame_gif.load("example.png") # Loads a .png file, the module supports non-animated files, but it is not recommended
-example_apng = pygame_gif.load("example.apng") # Loads a .apng file
+example_gif = gif_pygame.load("example.gif") # Loads a .gif file
+example_png = gif_pygame.load("example.png") # Loads a .png file, the module supports non-animated files, but it is not recommended
+example_apng = gif_pygame.load("example.apng") # Loads a .apng file
 
 while 1:
     win.fill((0, 0, 0))
@@ -47,7 +47,7 @@ while 1:
 
 To recap:
 
-`pygame_gif.load` loads in the image
+`gif_pygame.load` loads in the image
 
 To render the image you've got 2 options:
 - `img.render(surf, (x, y))`
