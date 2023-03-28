@@ -5,7 +5,7 @@ with open('README.md', encoding='utf-8') as readme:
 
 setup(
     name="gif_pygame",
-    version="0.0.1",
+    version="0.0.4",
     author="Zeperox",
     description="A pygame addon for animated image files",
     long_description=LONG_DESCRIPTION,
