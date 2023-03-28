@@ -19,7 +19,7 @@ A tool to make loading animated image files in pygame easier
 import pygame, time
 
 from PIL import Image
-from typing import Union, Tuple, Sequence, List, SupportsIndex, Iterable
+from typing import Union, Tuple, Sequence, List, SupportsIndex, Iterable, Optional
 
 _Coordinate = Union[Tuple[float, float], Sequence[float], pygame.Vector2]
 _CanBeRect = Union[pygame.Rect, Tuple[int, int, int, int], Tuple[_Coordinate, _Coordinate], Tuple[_Coordinate]]
@@ -41,11 +41,7 @@ class PygameGIF:
         """
         self.filepath = filepath
         
-        self.orig_gif = Image.open(filepath)
         self.gif = Image.open(filepath)
-
-        if self.gif.n_frames == 1:
-            print(f"Warning: The image file given, {filepath}, is only 1 frame, it will still run as normal but it is prefered to use an animated image file in order to fully utilize this module")
 
         self.frames = []
         for frame in range(self.gif.n_frames):
@@ -113,7 +109,7 @@ class PygameGIF:
         """
         return self.frames[0][0].get_rect(**kwargs)
 
-    def get_surface(self, select_frame: Union[None, SupportsIndex] = None, first_frame: Union[None, SupportsIndex] = None, last_frame: Union[None, SupportsIndex] = None) -> List[pygame.Surface]:
+    def get_surface(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[pygame.Surface]:
         """
         Returns the surface of the selected frame(s)
         
@@ -173,7 +169,7 @@ class PygameGIF:
                     duplicated_str += f"Frame Number: {duplicated_frame[1]}, Index: {duplicated_frame[0]}"
                 print(duplicated_str)
 
-    def get_duration(self, select_frame: Union[None, SupportsIndex] = None, first_frame: Union[None, SupportsIndex] = None, last_frame: Union[None, SupportsIndex] = None) -> List[float]:
+    def get_duration(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[float]:
         """
         Returns the duration of the selected frame(s) in seconds
         
@@ -233,7 +229,7 @@ class PygameGIF:
                     duplicated_str += f"Frame Number: {duplicated_frame[1]}, Index: {duplicated_frame[0]}"
                 print(duplicated_str)
 
-    def get_data(self, select_frame: Union[None, SupportsIndex] = None, first_frame: Union[None, SupportsIndex] = None, last_frame: Union[None, SupportsIndex] = None) -> List[Tuple[pygame.Surface, float]]:
+    def get_data(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[Tuple[pygame.Surface, float]]:
         """
         Returns both the surface and the duration (in seconds) of the selected frame(s)
         
@@ -295,7 +291,7 @@ class PygameGIF:
                 print(duplicated_str)
 
 
-    def get_alpha(self, select_frame: Union[None, SupportsIndex] = None, first_frame: Union[None, SupportsIndex] = None, last_frame: Union[None, SupportsIndex] = None) -> List[int]:
+    def get_alpha(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[int]:
         """
         Returns the alpha of the selected frame(s)
 
@@ -312,7 +308,7 @@ class PygameGIF:
             alphas = alphas[0]
         return alphas
 
-    def set_alpha(self, alpha: int, select_frame: Union[None, SupportsIndex] = None, first_frame: Union[None, SupportsIndex] = None, last_frame: Union[None, SupportsIndex] = None) -> None:
+    def set_alpha(self, alpha: int, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> None:
         """
         Sets the alpha of the selected frame(s)
 
@@ -329,7 +325,7 @@ class PygameGIF:
             self.frames[index][0].set_alpha(alpha)
 
 
-    def convert(self, colorkey: Union[None, _ColorValue] = None, select_frame: Union[None, SupportsIndex] = None, first_frame: Union[None, SupportsIndex] = None, last_frame: Union[None, SupportsIndex] = None) -> None:
+    def convert(self, colorkey: Optional[Union[None, _ColorValue]] = None, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> None:
         """
         Converts all surfaces
 
@@ -378,6 +374,33 @@ class PygameGIF:
         """
         if self.paused:
             self.frame_time = time.time()-(time.time()-self.paused_time)
+        self.paused = False
+
+    def reset(self, full_reset: Optional[bool] = False) -> None:
+        """
+        Resets the animation
+
+        :param full_reset: (optional) Fully resets the animation by redoing the initialization
+
+        Leave `full_reset` as `None` to keep the current data, only restart the animation from frame 0
+        """
+        if full_reset:
+            self.gif = Image.open(self.filepath)
+        
+            self.frames = []
+            for frame in range(self.gif.n_frames):
+                self.gif.seek(frame)
+                if frame == 0:
+                    if "duration" in self.gif.info:
+                        self.frames.append((pygame.image.load(self.filepath), self.gif.info["duration"]*.001))
+                    else:
+                        self.frames.append((pygame.image.load(self.filepath), 1))
+                else:
+                    self.frames.append((pygame.image.fromstring(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001))
+
+        self.frame = 0
+        self.frame_time = 0
+        self.paused_time = 0
         self.paused = False
 
 def load(filepath: _FileArg) -> PygameGIF:
