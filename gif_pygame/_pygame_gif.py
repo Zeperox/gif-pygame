@@ -48,11 +48,13 @@ class PygameGIF:
             self.gif.seek(frame)
             if frame == 0:
                 if "duration" in self.gif.info:
-                    self.frames.append((pygame.image.load(filepath), self.gif.info["duration"]*.001))
+                    self.frames.append([pygame.image.load(filepath), self.gif.info["duration"]*.001])
                 else:
-                    self.frames.append((pygame.image.load(filepath), 1))
+                    self.frames.append([pygame.image.load(filepath), 1])
             else:
-                self.frames.append((pygame.image.fromstring(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001))
+                self.frames.append([pygame.image.fromstring(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001])
+        
+        self.gif.close()
         self.frame = 0
         self.frame_time = 0
         self.paused_time = 0
@@ -87,6 +89,7 @@ class PygameGIF:
         """
         Returns the width of the .gif/.apng file
         """
+        print(self.frames[0])
         return self.frames[0][0].get_width()
 
     def get_height(self) -> int:
@@ -147,13 +150,13 @@ class PygameGIF:
                 failed_frames.append((index, surface[1]))
                 continue
 
-            if surface not in successful_frames:
+            if surface in successful_frames:
                 duplicated_frames.append((index, surface[1]))
                 continue
 
             else:
                 successful_frames.append(surface)
-                self.frames[surface[1]][0] = surface[1]
+                self.frames[surface[1]][0] = surface[0]
 
         if len(successful_frames) == 0:
             raise IndexError("None of the given frames are in the frames list")
@@ -207,13 +210,13 @@ class PygameGIF:
                 failed_frames.append((index, duration[1]))
                 continue
 
-            if duration not in successful_frames:
+            if duration in successful_frames:
                 duplicated_frames.append((index, duration[1]))
                 continue
 
             else:
                 successful_frames.append(duration)
-                self.frames[duration[1]][1] = duration[1]
+                self.frames[duration[1]][1] = duration[0]
 
         if len(successful_frames) == 0:
             raise IndexError("None of the given frames are in the frames list")
@@ -267,7 +270,7 @@ class PygameGIF:
                 failed_frames.append((index, data[2]))
                 continue
 
-            if data not in successful_frames:
+            if data in successful_frames:
                 duplicated_frames.append((index, data[2]))
                 continue
 
@@ -397,6 +400,8 @@ class PygameGIF:
                         self.frames.append((pygame.image.load(self.filepath), 1))
                 else:
                     self.frames.append((pygame.image.fromstring(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001))
+
+            self.gif.close()
 
         self.frame = 0
         self.frame_time = 0
