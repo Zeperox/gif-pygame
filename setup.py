@@ -5,13 +5,13 @@ with open('README.md', encoding='utf-8') as readme:
 
 setup(
     name="gif_pygame",
-    version="0.0.6",
+    version="0.1.0",
     author="Zeperox",
     description="A pygame addon for animated image files",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=find_packages(),
-    install_requires=["pygame-ce", "pillow"],
+    install_requires=["pygame-ce", "pillow", "warnings"],
     keywords=["python", "pygame", "addon", "image", "animation", "animated images"],
     classifiers=[
         "Development Status :: 6 - Mature",

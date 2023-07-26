@@ -1,6 +1,4 @@
 # gif_pygame
-### [PyPI Link](https://pypi.org/project/gif-pygame/)
-
 A pygame addon that allows you to load, animate, and render animated image files like .gif and .apng
 
 ## How to use
@@ -29,18 +27,20 @@ while 1:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                if example_gif.paused:
-                    example_gif.unpause()
+                if example_gif.paused: # Check whether `example_gif` is paused or not
+                    example_gif.unpause() # unpauses `example_gif` if it was paused
                 else:
-                    example_gif.pause()
-                if example_png.paused:
-                    example_png.unpause()
+                    example_gif.pause() # pauses `example_gif` if it was unpaused
+
+                if example_png.paused: # Check whether `example_png` is paused or not, since this is a non-animated image, it will not be affected
+                    example_png.unpause() # unpauses `example_png` if it was paused, since this is a non-animated image, it will not be affected
                 else:
-                    example_png.pause()
-                if example_apng.paused:
-                    example_apng.unpause()
+                    example_png.pause() # pauses `example_png` if it was unpaused, since this is a non-animated image, it will not be affected
+
+                if example_apng.paused: # Check whether `example_apng` is paused or not
+                    example_apng.unpause() # unpauses `example_apng` if it was paused
                 else:
-                    example_apng.pause()
+                    example_apng.pause() # pauses `example_apng` if it was unpaused
                     
     pygame.display.update()
 ```
@@ -60,13 +60,13 @@ There are also:
 - `.get_height()`, returns the height of the image
 - `.get_size()`, returns the size of the image
 - `.get_rect()`, returns the rect of the image
-- `.get_surface()`, returns a list of all surfaces in the animation, you can also pass in certain indexes
+- `.get_surfaces()`, returns a list of all surfaces in the animation, you can also pass in certain indexes
 - `.set_surface()`, replaces some of the surfaces in the animation with newer surfaces
-- `.get_duration()`, returns a list of all durations in the animation, you can also pass in certain indexes
+- `.get_durations()`, returns a list of all durations in the animation, you can also pass in certain indexes
 - `.set_duration()`, replaces some of the durations in the animation with newer durations
-- `.get_data()`, returns a list of all surfaces and durations in the animation, you can also pass in certain indexes
+- `.get_datas()`, returns a list of all surfaces and durations in the animation, you can also pass in certain indexes
 - `.set_data()`, replaces some of the surfaces and durations in the animation with newer surfaces and durations
-- `.get_alpha()`, returns a list of that includes the alphas of all surfaces in the animation, you can also pass in certain indexes
+- `.get_alphas()`, returns a list of that includes the alphas of all surfaces in the animation, you can also pass in certain indexes
 - `.set_alpha()`, replaces all the alphas of surfaces with newer alphas, you can also pass in certain indexes
 - `.convert()`, converts all the surfaces in the animation, you can also pass in a `colorkey` and certain indexes
 

@@ -16,7 +16,7 @@ A tool to make loading animated image files in pygame easier
     >>> surface.blit(loaded_gif.blit_ready(), (x, y)) # Animates the animated image and returns the current frame. Unlike `gif.render()`, this can be used with `surface.blit()`
 """
 
-import pygame, time
+import pygame, time, warnings
 
 from PIL import Image
 from typing import Union, Tuple, Sequence, List, SupportsIndex, Iterable, Optional
@@ -89,7 +89,6 @@ class PygameGIF:
         """
         Returns the width of the .gif/.apng file
         """
-        print(self.frames[0])
         return self.frames[0][0].get_width()
 
     def get_height(self) -> int:
@@ -112,6 +111,27 @@ class PygameGIF:
         """
         return self.frames[0][0].get_rect(**kwargs)
 
+    def get_surfaces(self, frames=[]):
+        """
+        Returns the surface of the selected frame(s)
+        
+        :param frames: (optional) Get the surface of the selected frames, leave empty to get all of the surfaces
+        """
+        if len(frames) == 0:
+            selected_frames = self.frames.copy()
+        else:
+            selected_frames = []
+            for frame in frames:
+                try:
+                    selected_frames.append(self.frames[frame])
+                except IndexError:
+                    print(f"Index {frame} does not exist, so it will be skipped")
+
+        l = [frame[0] for frame in selected_frames]
+        if len(l) == 1:
+            l = l[0]
+        return l
+
     def get_surface(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[pygame.Surface]:
         """
         Returns the surface of the selected frame(s)
@@ -122,6 +142,7 @@ class PygameGIF:
         
         Leave everything as `None` to get the surface all of the frames
         """
+        warnings.warn("gif_pygame.PygameGIF.get_surface deprecated since 0.1.0, use gif_pygame.PygameGIF.get_surfaces instead", DeprecationWarning, 2)
         selected_frames = self._grab_frame(select_frame, first_frame, last_frame)
 
         l = [frame[0] for frame in selected_frames]
@@ -172,6 +193,27 @@ class PygameGIF:
                     duplicated_str += f"Frame Number: {duplicated_frame[1]}, Index: {duplicated_frame[0]}"
                 print(duplicated_str)
 
+    def get_durations(self, frames=[]):
+        """
+        Returns the duration of the selected frame(s)
+        
+        :param frames: (optional) Get the surface of the selected frames, leave empty to get all of the durations
+        """
+        if len(frames) == 0:
+            selected_frames = self.frames.copy()
+        else:
+            selected_frames = []
+            for frame in frames:
+                try:
+                    selected_frames.append(self.frames[frame])
+                except IndexError:
+                    print(f"Index {frame} does not exist, so it will be skipped")
+
+        l = [frame[1] for frame in selected_frames]
+        if len(l) == 1:
+            l = l[0]
+        return l
+
     def get_duration(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[float]:
         """
         Returns the duration of the selected frame(s) in seconds
@@ -182,6 +224,7 @@ class PygameGIF:
 
         Leave everything as `None` to get the duration all of the frames
         """
+        warnings.warn("gif_pygame.PygameGIF.get_duration deprecated since 0.1.0, use gif_pygame.PygameGIF.get_durations instead", DeprecationWarning, 2)
         selected_frames = self._grab_frame(select_frame, first_frame, last_frame)
 
         l = [frame[1] for frame in selected_frames]
@@ -232,6 +275,27 @@ class PygameGIF:
                     duplicated_str += f"Frame Number: {duplicated_frame[1]}, Index: {duplicated_frame[0]}"
                 print(duplicated_str)
 
+    def get_datas(self, frames=[]):
+        """
+        Returns both the surface and the duration of the selected frame(s)
+        
+        :param frames: (optional) Get the surface of the selected frames, leave empty to get the surface and duration of all of the frames
+        """
+        if len(frames) == 0:
+            selected_frames = self.frames.copy()
+        else:
+            selected_frames = []
+            for frame in frames:
+                try:
+                    selected_frames.append(self.frames[frame])
+                except IndexError:
+                    print(f"Index {frame} does not exist, so it will be skipped")
+
+        l = [frame for frame in selected_frames]
+        if len(l) == 1:
+            l = l[0]
+        return l
+
     def get_data(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[Tuple[pygame.Surface, float]]:
         """
         Returns both the surface and the duration (in seconds) of the selected frame(s)
@@ -242,6 +306,7 @@ class PygameGIF:
 
         Leave everything as `None` to get the surface & duration all of the frames
         """
+        warnings.warn("gif_pygame.PygameGIF.get_data deprecated since 0.1.0, use gif_pygame.PygameGIF.get_datas instead", DeprecationWarning, 2)
         selected_frames = self._grab_frame(select_frame, first_frame, last_frame)
 
         l = [frame for frame in selected_frames]
@@ -293,6 +358,26 @@ class PygameGIF:
                     duplicated_str += f"Frame Number: {duplicated_frame[1]}, Index: {duplicated_frame[0]}"
                 print(duplicated_str)
 
+    def get_alphas(self, frames=[]):
+        """
+        Returns the alpha of the selected frame(s)
+        
+        :param frames: (optional) Get the surface of the selected frames, leave empty to get all of the alphas
+        """
+        if len(frames) == 0:
+            selected_frames = self.frames.copy()
+        else:
+            selected_frames = []
+            for frame in frames:
+                try:
+                    selected_frames.append(self.frames[frame])
+                except IndexError:
+                    print(f"Index {frame} does not exist, so it will be skipped")
+
+        l = [frame[0].get_alpha() for frame in selected_frames]
+        if len(l) == 1:
+            l = l[0]
+        return l
 
     def get_alpha(self, select_frame: Optional[Union[None, SupportsIndex]] = None, first_frame: Optional[Union[None, SupportsIndex]] = None, last_frame: Optional[Union[None, SupportsIndex]] = None) -> List[int]:
         """
@@ -304,6 +389,7 @@ class PygameGIF:
 
         Leave everything as `None` to get the alpha all of the frames
         """
+        warnings.warn("gif_pygame.PygameGIF.get_alpha deprecated since 0.1.0, use gif_pygame.PygameGIF.get_alphas instead", DeprecationWarning, 2)
         selected_frames = self._grab_frame(select_frame, first_frame, last_frame)
 
         alphas = [frame[0].get_alpha() for frame in selected_frames]
