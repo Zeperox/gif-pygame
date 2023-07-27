@@ -447,7 +447,7 @@ class PygameGIF:
         :param dest: Where the animation will be rendered at relative to the given surface
         """
         self._animate()
-        return self.get_surface(self.frame)
+        return self.get_surfaces([self.frame])
 
     def pause(self) -> None:
         """
