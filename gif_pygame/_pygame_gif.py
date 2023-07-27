@@ -52,7 +52,7 @@ class PygameGIF:
                 else:
                     self.frames.append([pygame.image.load(filepath), 1])
             else:
-                self.frames.append([pygame.image.fromstring(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001])
+                self.frames.append([pygame.image.frombytes(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001])
         
         self.gif.close()
         self.frame = 0
@@ -485,7 +485,7 @@ class PygameGIF:
                     else:
                         self.frames.append((pygame.image.load(self.filepath), 1))
                 else:
-                    self.frames.append((pygame.image.fromstring(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001))
+                    self.frames.append((pygame.image.frombytes(self.gif.tobytes(), self.gif.size, self.gif.mode), self.gif.info["duration"]*.001))
 
             self.gif.close()
 
