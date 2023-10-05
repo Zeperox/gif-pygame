@@ -15,7 +15,7 @@ example_apng = gif_pygame.load("example.apng") # Loads a .apng file
 while 1:
     win.fill((0, 0, 0))
     
-    # There are 2 ways of rendering the animated img file, the first method is doing "gif.render(surface, (x, y))", the other method is doing "surface.blit(gif.blit_ready(), (x, y))". THE "blit_ready()" FUNCTION MUST BE CALLED WHEN DOING THE SECOND METHOD
+    # There are 2 ways of rendering the animated img file, the first method is doing "gif.render(surface, (x, y))", the other method is doing "surface.blit(gif.blit_ready(), (x, y))". THE ".blit_ready()" FUNCTION MUST BE CALLED WHEN DOING THE SECOND METHOD
     example_gif.render(win, (128-example_gif.get_width()*0.5, 256-example_gif.get_height()*0.5))
     example_png.render(win, (256-example_png.get_width()*0.5, 256-example_png.get_height()*0.5))
     example_apng.blit(example_apng.blit_ready(), (384-example_apng.get_width()*0.5, 256-example_apng.get_height()*0.5))
@@ -56,18 +56,19 @@ To render the image you've got 2 options:
 There are other extra functions. The ones showcased in the example code are `img.pause()` and `img.unpause()`.
 
 There are also:
-- `.get_width()`, returns the width of the image
-- `.get_height()`, returns the height of the image
-- `.get_size()`, returns the size of the image
-- `.get_rect()`, returns the rect of the image
-- `.get_surfaces()`, returns a list of all surfaces in the animation, you can also pass in certain indexes
-- `.set_surface()`, replaces some of the surfaces in the animation with newer surfaces
+- `PygameGIF.get_width()`, returns the width of the image
+- `PygameGIF.get_height()`, returns the height of the image
+- `PygameGIF.get_size()`, returns the size of the image
+- `PygameGIF.get_rect()`, returns the rect of the image
+- `PygameGIF.get_surfaces()`, returns a list of all surfaces in the animation, you can also pass in certain indexes
+- `PygameGIF.set_surface()`, replaces some of the surfaces in the animation with newer surfaces
 - `.get_durations()`, returns a list of all durations in the animation, you can also pass in certain indexes
 - `.set_duration()`, replaces some of the durations in the animation with newer durations
 - `.get_datas()`, returns a list of all surfaces and durations in the animation, you can also pass in certain indexes
 - `.set_data()`, replaces some of the surfaces and durations in the animation with newer surfaces and durations
 - `.get_alphas()`, returns a list of that includes the alphas of all surfaces in the animation, you can also pass in certain indexes
 - `.set_alpha()`, replaces all the alphas of surfaces with newer alphas, you can also pass in certain indexes
-- `.convert()`, converts all the surfaces in the animation, you can also pass in a `colorkey` and certain indexes
 
 Please use python's `help()` function for more in-depth explanation
+
+(A documentation will be added soon)

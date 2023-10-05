@@ -1,1 +1,1 @@
-from gif_pygame._pygame_gif import load, PygameGIF
+from gif_pygame._pygame_gif import load, PygameGIF, transform
