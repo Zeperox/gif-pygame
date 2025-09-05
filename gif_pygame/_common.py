@@ -1,8 +1,20 @@
 import pygame
-from typing import Union, Tuple, Sequence
+from importlib.metadata import version as libver
+from packaging.version import Version
+from os import PathLike
 
-_Coordinate = Union[Tuple[float, float], Sequence[float], pygame.Vector2]
-_CanBeRect = Union[pygame.Rect, Tuple[int, int, int, int], Tuple[_Coordinate, _Coordinate], Tuple[_Coordinate]]
-_FileArg = Union[str, bytes]
-_RgbaOutput = Tuple[int, int, int, int]
-_ColorValue = Union[pygame.Color, int, str, Tuple[int, int, int], _RgbaOutput]
+try:
+	pygame.IS_CE
+	is_ce = True
+except AttributeError:
+	is_ce = False
+
+if is_ce and Version(libver("pygame-ce")) >= Version("2.5.2"):
+	from pygame.typing import Point, RectLike, FileLike, ColorLike
+else:
+	from typing import Union, Tuple, Sequence
+
+	Point = Union[Tuple[float, float], Sequence[float], pygame.Vector2]
+	RectLike = Union[pygame.Rect, pygame.FRect, Tuple[int, int, int, int], Tuple[Point, Point]]
+	FileLike = Union[str, bytes, PathLike]
+	ColorLike = Union[pygame.Color, int, str, Tuple[int, int, int], Tuple[int, int, int, int]]
