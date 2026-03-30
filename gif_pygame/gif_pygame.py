@@ -17,7 +17,7 @@ A tool to make loading animated image files in pygame easier
 	>>> More in docs
 """
 
-version = "1.2.0"
+version = "1.2.1"
 
 import pygame, time, warnings
 
@@ -72,17 +72,19 @@ class GIFPygame:
 		"""
 		Manages animating, looping, and timing
 		"""
-		if self._frame_time == 0:
-			self._frame_time = time.time()
-
-		if time.time()-self._frame_time >= self._frames[self._frame][1] / self.speed and not self._paused and not self._ended:
-			if self._frame >= len(self._frames)-1:
-				self._loops[0] += 1
-
-			self._frame = self._frame + 1 if self._frame < len(self._frames)-1 else 0
-			self._frame_time = time.time()
-		
-		if self._loops[1] != -1 and self._loops[0] > self._loops[1]:
+		if self._frame_time == 0:
+			self._frame_time = time.time()
+
+		if time.time()-self._frame_time >= self._frames[self._frame][1] / self.speed and not self._paused and not self._ended:
+			if self._frame >= len(self._frames)-1:
+				self._loops[0] += 1
+				if not(self._loops[1] != -1 and self._loops[0] > self._loops[1]):
+					self._frame = 0
+			else:
+				self._frame += 1
+			self._frame_time = time.time()
+
+		if self._loops[1] != -1 and self._loops[0] > self._loops[1]:
 			self.end()
 
 
