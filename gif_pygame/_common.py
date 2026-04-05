@@ -18,6 +18,6 @@ else:
 	if is_ce:
                 RectLike = Union[pygame.Rect, pygame.FRect, Tuple[int, int, int, int], Tuple[Point, Point]]
         else:
-                RectLike = Union[pygame.Rect, pygame.Rect, Tuple[int, int, int, int], Tuple[Point, Point]]
+                RectLike = Union[pygame.Rect, Tuple[int, int, int, int], Tuple[Point, Point]]
 	FileLike = Union[str, bytes, PathLike]
 	ColorLike = Union[pygame.Color, int, str, Tuple[int, int, int], Tuple[int, int, int, int]]
