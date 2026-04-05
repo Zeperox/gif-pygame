@@ -1,0 +1,8 @@
+__pycache__/
+.DS_Store
+outside_code/
+.vscode/
+test.py
+dist/
+gif_pygame.egg-info/
+notes.txt
