@@ -12,8 +12,8 @@ except AttributeError:
 
 if is_ce and Version(libver("pygame-ce")) >= Version("2.5.2"):
 	from pygame.typing import Point, RectLike, FileLike, ColorLike
-
-Point = Union[Tuple[float, float], Sequence[float], pygame.Vector2]
-RectLike = Union[pygame.Rect, pygame.FRect, Tuple[int, int, int, int], Tuple[Point, Point]] if is_ce else Union[pygame.Rect, Tuple[int, int, int, int], Tuple[Point, Point]]
-FileLike = Union[str, bytes, PathLike]
-ColorLike = Union[pygame.Color, int, str, Tuple[int, int, int], Tuple[int, int, int, int]]
+else:
+	Point = Union[Tuple[float, float], Sequence[float], pygame.Vector2]
+	RectLike = Union[pygame.Rect, pygame.Rect, Tuple[int, int, int, int], Tuple[Point, Point]] if is_ce else Union[pygame.Rect, Tuple[int, int, int, int], Tuple[Point, Point]]
+	FileLike = Union[str, bytes, PathLike]
+	ColorLike = Union[pygame.Color, int, str, Tuple[int, int, int], Tuple[int, int, int, int]]
