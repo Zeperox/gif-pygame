@@ -17,7 +17,7 @@ A tool to make loading animated image files in pygame easier
 	>>> More in docs
 """
 
-version = "1.2.3"
+version = "1.2.4"
 
 import pygame, time, warnings
 
