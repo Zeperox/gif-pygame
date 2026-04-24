@@ -11,7 +11,7 @@ setup(
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=find_packages(),
-    install_requires=["pygame-ce>=2.5.4", "pillow>=10.0.0"],
+    install_requires=["pygame-ce>=2.5.4", "pillow>=10.0.0", "packaging>=20.7"],
     keywords=["python", "pygame", "addon", "image", "animation", "animated images"],
     classifiers=[
         "Development Status :: 6 - Mature",
